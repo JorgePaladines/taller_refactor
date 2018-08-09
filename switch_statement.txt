@@ -1,0 +1,21 @@
+main(){
+	//...
+	if(instancia == 0){
+		p.setStatus(p.getStatus()+p.getSalario());
+	}
+	else if(instancia == 1){
+		p.setStatus(p.getStatus()+100);
+	}
+	else if(instancia == 2){
+		p.setStatus(p.getStatus()+p.getSalario()-100);
+	}
+	else if(instancia == 3){
+		p.setStatus(p.getStatus()-100);
+	}
+	else if(instancia == 4){
+		p.setStatus(p.getStatus()*2);
+	}
+	else{
+		p.setStatus(null);
+	}
+}

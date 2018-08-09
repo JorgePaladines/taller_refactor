@@ -1,0 +1,8 @@
+public class Vehicle{
+	void conducir();
+	void limpiar();
+}
+
+public class Llantas extends Vehicle{
+	void limpiar();	
+}

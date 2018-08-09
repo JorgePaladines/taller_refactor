@@ -1,0 +1,20 @@
+#print listaDeEstadosDeAceptaciónAAsignar
++    
++    #Ahora, se crea la lista de estados, ya usando el objeto Estado
++    #La variable "numEstados" posee el número de estados al cual hay que llegar
++    #La variable "listaDeEstadosDeAceptaciónAAsignar" posee cuáles de ellos son estados de aceptación
++    for idEstado in 0..(numEstados - 1)
++      #Si el idEstado se encuentra en la lista de estados de aceptación, el objeto Estado poseerá
++      #su variable "aceptacion" como true
++      if listaDeEstadosDeAceptaciónAAsignar.include?(idEstado)
++        estadoAAsignar = Estado.new(true,idEstado)
++        #Se lo agrega a la lista de estados
++        estados << estadoAAsignar
++        #Se lo agrega a la lista de aquellos que son estados de aceptación
++        @estAceptacion << estadoAAsignar
++        
++      else
++        #Si el idEstado, asignado por el for, no se encuentra en la lista, el 1er argumento es false
++        estados << Estado.new(false,idEstado)
++      end
++    end

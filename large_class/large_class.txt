@@ -1,0 +1,182 @@
++class Automata
++  def initialize()
++    #Primero se inicializa una lista vacía de estados de aceptación
++    @estAceptacion = []
++      
++    #Esta se llena en el método crearEstados() junto con la lista de estados del autómata
++    @estados = crearEstados()
++    
++    #Después se crea el alfabeto
++    @alfabeto = crearAlfabeto()
++    
++    #Luego las transiciones
++    @transiciones = crearTransiciones()
++    
++    #Finalmente se asigna el estado inicial
++    @estInicial = @estados[0]
++  end
++
++  #Este método crea los estados del autómata
++  def crearEstados()
++    #Primero una lista vacía llamada 'estados'
++    estados = []
++    print "Escoja la cantidad de estados que posee el autómata: "
++    numEstados = gets.to_i
++    print "Estos son los estados: "
++    print "|"
++    
++    #Se imprimirá la cantidad de estados escogidos, desde el 0 al número ingresado por teclado
++    #Los id's van a ser 0,1,2... hasta el número escogido
++    #Por el momento, se muestran así por pantalla: |0|1|2|3|...
++    for i in 0..(numEstados-1)
++      print "#{i}|"
++    end
++    puts ""
++    
++=begin
++    Luego, se pide especificar cuáles son los estados que son aceptados, para que sean asignados
++    de una vez.
++    El usuario escribirá los id de los estados, seprados por comas:
++    2,4,5,7
++=end
++    print "¿Cuáles de ellos desea que sean estados de aceptación? (separe por comas): "
++    
++    estAcp = gets
++    listaDeEstadosDeAceptaciónAAsignar = []
++    #Se usa el método .split() para que los números separados por comas sean usados como lista
++    for a in estAcp.split(",")
++      #Si se ha especificado un id que no existe, sólo no se agrega. No hay problema
++      #Eso sí, debe ser transformado a Integer con ".to_i" porque el "gets" los grabó como string
++      listaDeEstadosDeAceptaciónAAsignar << a.to_i
++    end
++    
++    #print listaDeEstadosDeAceptaciónAAsignar
++    
++    #Ahora, se crea la lista de estados, ya usando el objeto Estado
++    #La variable "numEstados" posee el número de estados al cual hay que llegar
++    #La variable "listaDeEstadosDeAceptaciónAAsignar" posee cuáles de ellos son estados de aceptación
++    for idEstado in 0..(numEstados - 1)
++      #Si el idEstado se encuentra en la lista de estados de aceptación, el objeto Estado poseerá
++      #su variable "aceptacion" como true
++      if listaDeEstadosDeAceptaciónAAsignar.include?(idEstado)
++        estadoAAsignar = Estado.new(true,idEstado)
++        #Se lo agrega a la lista de estados
++        estados << estadoAAsignar
++        #Se lo agrega a la lista de aquellos que son estados de aceptación
++        @estAceptacion << estadoAAsignar
++        
++      else
++        #Si el idEstado, asignado por el for, no se encuentra en la lista, el 1er argumento es false
++        estados << Estado.new(false,idEstado)
++      end
++    end
++    
++    #puts estados.to_s
++    
++    #Salto de línea para que se vea bonito
++    puts ""
++    
++    #Y finalmente se retorna la variable "estados" y se le asigna a la local "@estados"
++    return estados
++    
++  end
++  
++  #Método que crea el alfabeto a utilizar
++  def crearAlfabeto()
++    print "Escriba el alfabeto a utilizar, separado por comas: "
++    #Se lo toma por teclado
++    alfabetoSeparadoPorComas = gets
++    #Se lo separa en una lista
++    alfabeto = alfabetoSeparadoPorComas.split(",")
++    alfabeto[-1] = alfabeto[-1][0]
++    puts ""
++    #Se visualiza el alfabeto
++    puts "Alfabeto: "
++    print alfabeto
++    puts ""
++    puts ""
++    
++    #Se lo retorna a la variable @alfabeto
++    return alfabeto
++  end
++
++  def crearTransiciones()
++    transiciones = []
++    puts "Ahora debe asignar las transiciones. Recuerde que sólo puede existir una transición para el estado por cada elemento del alfabeto"
++    puts "Primero el elemento del alfabeto, seguido de una coma, y el estado al que se le asigna"
++    puts "(presione ENTER sin escribir para terminar de asignar): "
++    
++    #Recorrer la lista de estados
++    for estPartida in @estados
++      puts "--- Estado #{estPartida.getIdEstado} ---"
++      #Esta es una lista de los estados que ya han sido asignados como destinos, para que no se repitan
++      listaDeEstadosAsignados = []
++        
++      elementoYEstado_SCAN = gets
++      
++      #Mientras el usuario no presione ENTER y ya, se seguirá registrando transiciones
++      while elementoYEstado_SCAN != "\n" do
++        listaDeSCAN = elementoYEstado_SCAN.split(",")
++        #Si el split no genera sólo 2 elementos, algo escribió mal
++        if listaDeSCAN.size != 2
++          puts "Escribió mal la asignación. Intente de nuevo"
++          elementoYEstado_SCAN = gets
++        else
++          #Si el primer elemento especificado no es un elemento del alfabeto, se reinicia
++          if not @alfabeto.include?(listaDeSCAN[0])
++            puts "Debe de asignar un elemento de alfabeto válido"
++            elementoYEstado_SCAN = gets
++          #Si el id escrito por teclado, no es un número válido, se reinicia
++          elsif not Array(0..@estados.size()).include?(listaDeSCAN[1].to_i)
++            puts "Debe asignar un estado válido"
++            elementoYEstado_SCAN = gets
++          #Si todo sale bien:
++          else
++            #puts elementoYEstado_SCAN
++            
++            #Crear la transicion y guardarla
++            elAlfa = listaDeSCAN[0]
++            estDestino = listaDeSCAN[1].to_i
++            #Si el estado de destino ya fue asignado, cambiar el elemento del alfabeto
++            if listaDeEstadosAsignados.include?(estDestino)
++              for trans in @transiciones
++                if trans.getDestino == estDestino
++                  trans.setAlfa = elAlfa
++                end
++              end
++            #Si es una nueva asignación de destino, sólo crear la transición
++            else
++              transicion = Transicion.new(estPartida,estDestino,elAlfa)
++              transiciones << transicion
++              estPartida.agregarTransicion(transicion)
++            end
++            
++            #Volver a pedir un registro
++            elementoYEstado_SCAN = gets
++          #end if not interno
++          end
++          
++        #end if externo
++        end
++        
++      #end while
++      end
++    #end for
++    end
++  #end def
++  end
++
++  def to_s
++    for estado in @estados
++      idEst = estado.getIdEstado
++      puts estado
++      for tran in estado.getTransiciones
++        puts tran
++      end
++      puts ""
++    end
++  end
++
++  private :crearEstados, :crearTransiciones, :crearAlfabeto
++
++end

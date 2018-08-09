@@ -1,0 +1,15 @@
+class Persona{
+    Color colorOjos;
+    Color colorCabello;
+    Horario horario;
+
+    Persona(){
+        this.colorOjos = new Color(0);
+        this.colorCabell = new Color(1);
+        this.horario = new Horario();
+    }
+
+    public cambiarCampos(Horario horario){
+         //...
+    }
+}

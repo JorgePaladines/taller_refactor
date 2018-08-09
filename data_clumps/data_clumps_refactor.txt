@@ -1,0 +1,18 @@
+class Persona{
+	Credenciales credenciales;
+	Telefono telefono;
+	//...
+
+}
+
+class Credenciales{
+	String cedula;
+	String matricula;
+	String RUC;
+}
+
+class Telefono{
+	String telConvencional;
+	String telCelular;
+	String telOficina;
+}

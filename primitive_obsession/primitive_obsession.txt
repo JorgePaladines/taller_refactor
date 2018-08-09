@@ -1,0 +1,17 @@
+class Persona{
+    String colorOjos;
+    String colorCabello;
+    String horario;
+    String dia;
+
+    Persona(){
+        this.colorOjos = "negro";
+        this.colorCabell = "castaño";
+        this.horario = "13:30-15:30";
+        this.dia = "lunes";
+    }
+
+    public cambiarCampos(String hora, String fecha){
+         //...
+    }
+}

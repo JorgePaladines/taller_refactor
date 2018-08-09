@@ -1,0 +1,39 @@
+main(){
+	//...
+	p.setStatus();
+	//...
+}
+
+abstract class Persona{
+	abstract void setStatus();
+}
+
+class Persona1 extends Persona{
+	void setStatus(){
+		this.status = this.getStatus()+this.getSalario();
+	}
+}
+
+class Persona2 extends Persona{
+	void setStatus(){
+		this.status = this.getStatus()+100;
+	}
+}
+
+class Persona3 extends Persona{
+	void setStatus(){
+		this.status = this.getStatus()+this.getSalario()-100;
+	}
+}
+
+class Persona4 extends Persona{
+	void setStatus(){
+		this.status = this.getStatus()-100;
+	}
+}
+
+class Persona5 extends Persona{
+	void setStatus(){
+		this.status = this.getStatus()*2;
+	}
+}

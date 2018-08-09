@@ -1,0 +1,12 @@
+public class Vehicle{
+	Llantas l;
+	void conducir();
+	void limpiar(){
+		//...
+		l.limpiar();
+	}
+}
+
+public class Llantas{
+	void limpiar();	
+}

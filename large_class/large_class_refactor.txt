@@ -1,0 +1,80 @@
+class Automata
+  
+  def initialize()
+    #Primero se inicializa una lista vacía de estados de aceptación
+    @estAceptacion = []
+      
+    #Esta se llena en el método crearEstados() junto con la lista de estados del autómata
+    @estados = crearEstados()
+    
+    #Después se crea el alfabeto
+    @alfabeto = crearAlfabeto()
+    
+    #Luego las transiciones
+    @transiciones = crearTransiciones()
+    
+    #Finalmente se asigna el estado inicial
+    @estInicial = @estados[0]
+  end
+
+  
+  #Metodo que establece el numero de estados que se van a crear
+  def definirNumEstados()
+    print "Cuantos estados posee el automata?: "
+    numEstados = gets.to_i
+    return numEstados
+  end
+  
+  
+  #Metodo que muestra todos los estados
+  def showEstados(numEstados)
+    print "Estos son los estados: "
+    print "|"
+    for i in 0..(numEstados-1)
+      print "#{i}|"
+    end
+    puts ""
+  end
+  
+  
+  #Metodo que define que estado es de aceptacion
+  def definirEstadosAceptacion(numEstados)
+    print "Cuales de ellos desea que sean estados de aceptacion?(Separe por comas): "
+    estAcp = gets
+    eAceptacionAsignar = []
+    for a in estAcp.split(",")
+      eAceptacionAsignar << a.to_i
+    end
+    return eAceptacionAsignar
+  end
+  
+  
+  #Metodo que crea los Estados
+  def crearEstados()
+    return CreadorEstados.new()
+  end
+  
+
+  #Método que crea el alfabeto a utilizar
+  def crearAlfabeto()
+    return CreadorAlfabeto.new()
+  end
+
+  def crearTransiciones()
+    creadorDeTransiciones = CreadorDeTransiciones.new(this.Automata)
+  end
+
+  def to_s
+    for estado in @estados
+      idEst = estado.getIdEstado
+      puts estado
+      for tran in estado.getTransiciones
+        puts tran
+      end
+      puts ""
+    end
+  end
+
+  private :crearEstados, :crearTransiciones, :crearAlfabeto
+
+end

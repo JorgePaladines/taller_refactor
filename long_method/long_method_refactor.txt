@@ -1,0 +1,10 @@
++    estados = []
++    for idEstado in 0.. (numEstados-1)
++      if eAceptacionAsignar.include?(idEstado)
++        estadoAsignar = Estado.new(true, idEstado)
++        estados << estadoAsignar
++        @estAceptacion << estadoAsignar
++      else 
++        estados << Estado.new(false, idEstado)
+       end
++    end

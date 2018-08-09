@@ -1,0 +1,10 @@
+class Persona{
+	String cedula;
+	String matricula;
+	String RUC;
+	String telConvencional;
+	String telCelular;
+	String telOficina;
+	//...
+
+}
